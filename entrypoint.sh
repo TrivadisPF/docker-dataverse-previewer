@@ -3,20 +3,16 @@
 set -euo pipefail
 
 # Set some defaults as documented
-DATAVERSE_URL=${DATAVERSE_URL:-"http://localhost:8080"}
 TIMEOUT=${TIMEOUT:-"3m"}
 
-if [[ -z "${DATAVERSE_URL:-}" ]]; then
-    echo "Error: DATAVERSE_URL is not set or is empty" >&2
-    exit 1
+# Wait for the instance to become available
+if [[ -v DATAVERSE_URL ]] && [[ -n "${DATAVERSE_URL}" ]]; then
+  echo "Waiting for ${DATAVERSE_URL} to become ready in max ${TIMEOUT}."
+  wait4x http "${DATAVERSE_URL}/api/info/version" -i 8s -t "$TIMEOUT" --expect-status-code 200 --expect-body-json data.version
 fi
 
-# Wait for the instance to become available
-echo "Waiting for ${DATAVERSE_URL} to become ready in max ${TIMEOUT}."
-wait4x http "${DATAVERSE_URL}/api/info/version" -i 8s -t "$TIMEOUT" --expect-status-code 200 --expect-body-json data.version
-
 # base command
-CMD="python /app/dataverse-cli.py"
+CMD="python /app/dataverse-cli.py $@"
 
 # Check if DATAVERSE_URL environment variable is set to value
 if [[ -v DATAVERSE_URL ]] && [[ -n "${DATAVERSE_URL}" ]]; then
@@ -36,4 +32,4 @@ if [[ -v REMOVE_EXISTING ]] && [[ "${REMOVE_EXISTING,,}" == "true" ]]; then
 fi
 echo "$CMD"
 # Run the command with any additional arguments passed to the entrypoint
-$CMD "$@"
+$CMD

@@ -15,7 +15,31 @@ def remove_all_previewer(dataverse_url):
                 response = requests.delete(url + "/" + str(tool["id"]))
                 print(response.json()["status"])
 
-def add_previewer(dataverse_url, data):
+def list_all_previewer(dataverse_url):
+    url = f"{dataverse_url}/api/admin/externalTools"
+
+    response = requests.get(url)
+
+    click.echo(f"The following previewers are installed on {dataverse_url}:")
+    click.echo("")            
+    COL_NAME = "name"
+    COL_CONTENT_TYPE = "content type"
+    COL_DESC = "description"
+    click.echo(f"{COL_NAME:30}{COL_CONTENT_TYPE:40}{COL_DESC}")
+    click.echo("-----------------------------------------------------------------------------------------------")
+
+    if (response.status_code == 200):
+        for tool in response.json()["data"]:
+            if "preview" in tool["types"]:
+                click.echo(f"{tool['displayName']:30}{tool['contentType']:40}{tool['description']:40}")
+    else:
+        try:
+            response.raise_for_status()   
+        except requests.exceptions.HTTPError as e:
+            # Print a descriptive error message
+            print(f"HTTP error occurred: {e}")  # Example: HTTP error occurred: 404 Client Error: Not Found for url: ...
+            
+def add_previewer(dataverse_url, provider_url, data):
 
     # Data to send in JSON format
     payload_template = """
@@ -25,7 +49,7 @@ def add_previewer(dataverse_url, data):
                 "toolName":"{{toolName}}",
                 "scope":"file",
                 "types":["preview"],
-                "toolUrl":"{{toolUrl}}",
+                "toolUrl":"{{provider_url}}/{{toolUrl}}",
                 "toolParameters": {
                     "queryParameters":[
                         {"fileid":"{fileId}"},
@@ -71,6 +95,9 @@ def add_previewer(dataverse_url, data):
     
     # Create a Template object
     template = Template(payload_template)
+
+    # add provider-url to the data
+    data.update({"provider_url" : provider_url})
     # Render the template with data
     payload = template.render(data)
 
@@ -100,8 +127,9 @@ def cli():
 @click.option("--dataverse-url", required=True, help="The url of the dataverse server.", default="http://localhost:8080")
 @click.option("--includes", callback=csv_option, help="a list of previewers to include.", default="")
 @click.option("--excludes", callback=csv_option, help="a list of previewers to exclude.", default="")
+@click.option("--provider-url", required=True, help="The url of the previewer provider service.", default="http://https://gdcc.github.io/dataverse-previewers")
 @click.option("--remove-existing", is_flag=True, help="remove all existing previewers from the dataverse server.", default=False)
-def deploy(dataverse_url, includes, excludes, remove_existing):
+def deploy(dataverse_url, includes, excludes, provider_url, remove_existing):
     """Deploys specific or all supported previewers on the Dataverse instance."""
 
     if remove_existing:
@@ -112,21 +140,32 @@ def deploy(dataverse_url, includes, excludes, remove_existing):
     
         for previewer in data["previewers"]:
             if (previewer in includes) or (not includes and previewer not in excludes):
-                add_previewer (dataverse_url, data["previewers"][previewer])
+                add_previewer (dataverse_url, provider_url, data["previewers"][previewer])
 
 @cli.command()
 @click.option("--dataverse-url", required=True, help="The url of the dataverse server.", default="http://localhost:8080")
 def remove(dataverse_url):
     """Removes all the previewers currently installed on the Dataverse instance."""
-    click.echo(dataverse_url)
+
     remove_all_previewer(dataverse_url)
 
 @cli.command()
-def list():
-    """List all the previewers which can be installed."""
+@click.option("--dataverse-url", required=True, help="The url of the dataverse server.", default="http://localhost:8080")
+def list(dataverse_url):
+    """List all the previewers currently installed on the Dataverse instance."""
+
+    list_all_previewer(dataverse_url)
+
+
+@cli.command()
+def previewers():
+    """Shows all the previewers which can be installed."""
+
     with open("./previewers.yaml", "r") as yaml_file:
         data = yaml.safe_load(yaml_file)
 
+        click.echo(f"The following previewers can be deployed:")
+        click.echo("")     
         COL_NAME = "name"
         COL_DESC = "description"
         click.echo(f"{COL_NAME:40}{COL_DESC}")

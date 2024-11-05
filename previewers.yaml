@@ -29,7 +29,7 @@ previewers:
     toolName: "audioPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/AudioPreview.html"
     contentType: "audio/wav"
-  ogg:
+  ogg-audio:
     displayName: "Play Audio"
     description: "Listen to an audio file."
     toolName: "audioPreviewer"
@@ -71,37 +71,37 @@ previewers:
     toolName: "videoPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/VideoPreview.html"
     contentType: "video/mp4"                                                  
-  video-ogg:
+  ogg-video:
     displayName: "Play Video"
     description: "Watch a video file."
     toolName: "videoPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/VideoPreview.html"
     contentType: "video/ogg"   
-  video-quicktime:
+  quicktime:
     displayName: "Play Video"
     description: "Watch a video file."
     toolName: "videoPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/VideoPreview.html"
     contentType: "video/quicktime"          
-  text-comma-separated-values:
+  comma-separated-values:
     displayName: "View Data"
     description: "View the spreadsheet data."
     toolName: "spreadsheetPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/SpreadsheetPreview.html"
     contentType: "text/comma-separated-values"              
-  text-tab-separated-values:
+  tab-separated-values:
     displayName: "View Data"
     description: "View the spreadsheet data."
     toolName: "spreadsheetPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/SpreadsheetPreview.html"
     contentType: "text/tab-separated-values"                  
-  text-csv:
+  csv:
     displayName: "View Data"
     description: "View the spreadsheet data."
     toolName: "spreadsheetPreviewer"
     toolUrl: "https://qualitativedatarepository.github.io/dataverse-previewers/previewers/v1.3/SpreadsheetPreview.html"
     contentType: "text/csv"              
-  text-tsv:
+  tsv:
     displayName: "View Data"
     description: "View the spreadsheet data."
     toolName: "spreadsheetPreviewer"

@@ -102,6 +102,7 @@ def cli():
 @click.option("--excludes", callback=csv_option, help="a list of previewers to exclude.", default="")
 @click.option("--remove-existing", is_flag=True, help="remove all existing previewers from the dataverse server.", default=False)
 def deploy(dataverse_url, includes, excludes, remove_existing):
+    """Deploys specific or all supported previewers on the Dataverse instance."""
 
     if remove_existing:
         remove_all_previewer(dataverse_url)
@@ -116,11 +117,13 @@ def deploy(dataverse_url, includes, excludes, remove_existing):
 @cli.command()
 @click.option("--dataverse-url", required=True, help="The url of the dataverse server.", default="http://localhost:8080")
 def remove(dataverse_url):
+    """Removes all the previewers currently installed on the Dataverse instance."""
     click.echo(dataverse_url)
     remove_all_previewer(dataverse_url)
 
 @cli.command()
 def list():
+    """List all the previewers which can be installed."""
     with open("./previewers.yaml", "r") as yaml_file:
         data = yaml.safe_load(yaml_file)
 

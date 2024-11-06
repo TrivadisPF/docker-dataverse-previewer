@@ -161,6 +161,12 @@ previewers:
     toolName: "mdPreviewer"
     toolUrl: "previewers/v1.4/MdPreview.html"
     contentType: "text/markdown"    
+  x-markdown:
+    displayName: "Show Markdown (MD)"
+    description: "View the Markdown file."
+    toolName: "mdPreviewer"
+    toolUrl: "previewers/v1.4/MdPreview.html"
+    contentType: "text/x-markdown"    
   esri:
     displayName: "View Map"
     description: "View a map of the file."

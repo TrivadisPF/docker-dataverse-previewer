@@ -30,5 +30,6 @@ COPY entrypoint.sh /app/
 COPY previewers.yaml /app/
 COPY dataverse-cli.py /app/
 
-# Define the command to run your CLI
+# Define the command to run the CLI with deploy being the default command
 ENTRYPOINT ["./entrypoint.sh"]
+CMD ["deploy"]

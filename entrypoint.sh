@@ -8,7 +8,7 @@ TIMEOUT=${TIMEOUT:-"3m"}
 # Wait for the instance to become available
 if [[ -v DATAVERSE_URL ]] && [[ -n "${DATAVERSE_URL}" ]]; then
   echo "Waiting for ${DATAVERSE_URL} to become ready in max ${TIMEOUT}."
-  wait4x http "${DATAVERSE_URL}/api/info/version" -i 8s -t "$TIMEOUT" --expect-status-code 200 --expect-body-json data.version
+  wait4x http "${DATAVERSE_URL}/api/info/version" -i 15s -t "$TIMEOUT" --expect-status-code 200 --expect-body-json data.version
 fi
 
 # base command

@@ -18,9 +18,9 @@ CMD="python /app/dataverse-cli.py $@"
 if [[ -v DATAVERSE_URL ]] && [[ -n "${DATAVERSE_URL}" ]]; then
     CMD+=" --dataverse-url="${DATAVERSE_URL}
 fi
-# Check if PREVIEWER_PROVIDER_URL environment variable is set to value
-if [[ -v PREVIEWER_PROVIDER_URL ]] && [[ -n "${PREVIEWER_PROVIDER_URL}" ]]; then
-    CMD+=" --provider-url="${PREVIEWER_PROVIDER_URL}
+# Check if PREVIEWERS_PROVIDER_URL environment variable is set to value
+if [[ -v PREVIEWERS_PROVIDER_URL ]] && [[ -n "${PREVIEWERS_PROVIDER_URL}" ]]; then
+    CMD+=" --provider-url="${PREVIEWERS_PROVIDER_URL}
 fi
 # Check if INCLUDE_PREVIEWERS environment variable is set to value
 if [[ -v INCLUDE_PREVIEWERS ]] && [[ -n "${INCLUDE_PREVIEWERS}" ]]; then

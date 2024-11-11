@@ -41,13 +41,13 @@ docker run  -e DATAVERSE_URL=http://192.168.1.115:28394 trivadis/dataverse-previ
 The following command can be used to deploy some of/all supported previewers of the instance represented by the `DATAVERSE_URL`. The container will first check and wait for the instance to be available (important if used during bootstrapping).
 
 ```bash
-docker run -ti -e DATAVERSE_URL=http://192.168.1.115:28394 -e PREVIEWER_PROVIDER_URL=http://192.168.1.115:28395  -e REMOVE_EXISTING=true -e INCLUDE_PREVIEWERS="text,html" trivadis/dataverse-deploy-previewers:latest deploy
+docker run -ti -e DATAVERSE_URL=http://192.168.1.115:28394 -e PREVIEWERS_PROVIDER_URL=http://192.168.1.115:28395  -e REMOVE_EXISTING=true -e INCLUDE_PREVIEWERS="text,html" trivadis/dataverse-deploy-previewers:latest deploy
 ```
 
 The following environment variables are supported
 
   * `DATAVERSE_URL` - the url of the Dataverse instance
-  * `PREVIEWER_PROVIDER_URL` - the url of the Dataverse Previewer
+  * `PREVIEWERS_PROVIDER_URL` - the url of the Dataverse Previewer
   * `INCLUDE_PREVIEWERS` - a comma-separted list of previewers to install. if left empty or not defined, then all previewers will be installed.
   * `EXCLUDE_PREVIEWERS` - a comma-spearted list of previewers to include from the install. Only applicable, if `INCLUDE_PREVIEWERS` is empty or not defined.
   * `REMOVE_EXISTING` - 

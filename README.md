@@ -1,6 +1,6 @@
-# docker-dataverse-previewer
+# docker-register-dataverse-previewer
 
-This GitHub project provides a Docker image which helps to automatically deploy Dataverse previewers to a working Dataverse installlation.
+This GitHub project provides a Docker image which helps to automatically register Dataverse previewers on a running Dataverse installlation.
 
 The functionality is implemented by a Python CLI supporting 4 different commands
 
